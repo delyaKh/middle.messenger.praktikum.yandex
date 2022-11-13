@@ -13,5 +13,8 @@
     "devDependencies": {
         "@anikin/parcel-transformer-handlebars": "^1.0.9",
         "parcel": "^2.0.1"
+    },
+    "dependencies": {
+        "handlebars": "^4.7.7"
     }
 }
