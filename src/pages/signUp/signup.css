@@ -1,0 +1,89 @@
+html {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    height:100%;
+  }
+
+  body {
+    background-color:#fff;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
+
+  .main{
+    height: 100%;
+  }
+
+  .auth{
+    position: absolute;
+    width: 350px;
+    height: 450px;
+    left: 600px;
+    top: 135px;
+    background: #FFFFFF;
+    text-align: center;
+    line-height: 40px;
+    border: 0px solid;
+  }
+
+  .auth .form {
+    display: grid;
+    grid-template-rows: 10% 80% 10% 10%;
+    max-width:800px;
+    max-height: 400px;
+    padding:50px 0px;
+    border-radius:10px;
+    box-shadow:4px 4px 15px rgba(0, 0, 0, 0.2);
+    background-color:#fff;
+  }
+
+  .auth .auth-title{
+    display: block;    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: #1E1E1E;
+  }
+.auth .auth-inputs{
+    display: block;
+}
+  .auth .auth-input{
+    width: 280px;
+    height: 25px;
+    text-align:center;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid #3f93ff
+  }
+
+  .auth-input:invalid:required{
+    border-bottom: 2px solid #ff0000;
+  }
+
+  .auth .button-create{
+    width: 280px;
+    height: 37px;  
+    text-align:center;
+    background: #3369F3;
+    border: 0px solid #3369F3;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+  }
+  .auth-link{
+    display: block;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #3369F3;  
+    text-align:center;
+  }

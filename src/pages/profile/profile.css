@@ -1,0 +1,124 @@
+html {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    height:100%;
+  }
+
+body {
+    background-color:#fff;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
+
+  .main{
+    height: 100%;
+  }
+
+  .profile-wrap{
+    position: absolute;
+    height: 500px;
+    left: 600px;
+    top: 120px;
+    background: #FFFFFF;
+    line-height: 40px;
+    border: 0px solid;
+  }
+
+  .form {
+    background-color:#fff;
+  }
+
+  
+
+  .profile-input-form{
+    display: grid;
+    grid-template-columns: 80px 290px;
+    column-gap: 5px;
+  }
+
+  .profile-name{
+    text-align: center;
+  }
+
+  .profile-image{
+    text-align: center;
+  }
+
+  .profile-label{
+    display: block;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: #1E1E1E;
+    text-align: left;
+    left: 50%;
+    top: 50%;
+  }
+
+  .profile-input{   
+    display: block;
+    width: 280px;
+    height: 25px;
+    text-align:center;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid #EAEAEA;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: right;
+    color: #999999;
+  }
+  .profile-input:focus{
+    outline-width: 0;
+  }
+
+  .profile-link{
+    margin-top:20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: #3369F3;
+    border-bottom: 2px solid #EAEAEA;
+  }
+
+  .profile-button{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: #FF0000;
+    border: none;
+    background-color: #fff;
+  }
+
+  .profile-button-form{
+  text-align: center;
+  }
+
+  .profile-button-save{
+    margin-top: 40px;
+    width: 200px;
+    height: 37px;  
+    text-align:center;
+    background: #3369F3;
+    border: 0px solid #3369F3;
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    color: #FFFFFF;
+  }
+

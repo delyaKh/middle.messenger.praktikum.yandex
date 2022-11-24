@@ -1,0 +1,63 @@
+{
+    "people_list": [
+      {
+        "user_name": "Петр Белов",
+        "last_message": "Привет",
+        "user_id": 1,
+        "user_avatar": "",
+        "time_last_message": "10:34",
+        "unread_messagges": "2"
+      },
+      {
+        "user_name": "Илья Петров",
+        "last_message": "Друзья, я сегодня не смогу придти!...",
+        "user_id": 2,
+        "user_avatar": "",
+        "time_last_message": "10:01",
+        "unread_messagges": "1"
+      }
+    ],
+
+    "profile": 
+      {
+        "_id": "1",
+        "index": 0,
+        "avatar": "/static/img/ava.png",
+        "first_name": "Petr",
+        "second_name": "Belov",
+        "email": "petrbelov@mail.ru",
+        "login": "PetrBelov",
+        "nickname": "petr_belov",
+        "phone": "+7(909)9673030",
+        "password":"12345678"
+      },
+
+    "dialog_room":
+        {
+        "index":"0",
+        "last_date":"22 декабря",
+        "dialog":[
+          {
+            "type":"request",
+            "message":"Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.",
+            "time":"11:56"
+          },
+          {
+            "type":"response",
+            "time":"12:00",
+            "message":"Привет, очеень круто!"
+          },
+          {
+            "type":"request",
+            "message":"Давай посмотрим фильм об истории НАСА?",
+            "time":"12:05"
+          },
+          {
+            "type":"response",
+            "message":"Я сегодня не смогу(",
+            "time":"12:10"
+          }
+        ]        
+        }
+  }
+  
