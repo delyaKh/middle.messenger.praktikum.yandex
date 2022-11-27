@@ -9,38 +9,39 @@
     <div class="profile-wrap">
         <form class="form">
                     <div class="profile-image">
-                        <img class="profile-item-img" src="/static/images/avatar.png" width="160" height="140" alt="avatar"/>
+                        <img class="profile-item-img" src="/static/images/avatar.png" name="avatar" width="160" height="140" alt="avatar"/>
+
                     </div>
                     <div class="profile-name">{{data.profile.first_name}}</div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Почта</div>
-                        <input class="profile-input" value="{{ data.profile.email}}">
+                        <input class="profile-input" name="email" value="{{ data.profile.email}}">
                     </div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Логин</div>
-                        <input class="profile-input" value="{{ data.profile.login}}">
+                        <input class="profile-input" name="login" value="{{ data.profile.login}}">
                     </div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Имя</div>
-                        <input class="profile-input" value="{{ data.profile.first_name}}">
+                        <input class="profile-input" name="first_name" value="{{ data.profile.first_name}}">
                     </div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Фамилия</div>
-                        <input class="profile-input" value="{{ data.profile.second_name}}">
+                        <input class="profile-input" name="second_name" value="{{ data.profile.second_name}}">
                     </div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Имя в чате</div>
-                        <input class="profile-input" value="{{ data.profile.nickname}}">
+                        <input class="profile-input" name="display_name" value="{{ data.profile.nickname}}">
                     </div>
 
                     <div class="profile-input-form">
                         <div class="profile-label">Телефон</div>
-                        <input class="profile-input" value="{{ data.profile.phone}}">
+                        <input class="profile-input" name="phone" value="{{ data.profile.phone}}">
                     </div>
 
                     <div class="profile-link">

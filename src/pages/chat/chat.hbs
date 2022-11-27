@@ -19,7 +19,9 @@
                 {{#each data.people_list}}
                     <li class="chat-item">
                         <div class="chat-item-info">
-                                <img class="chat-item-img" src="/static/images/avatar.png" width="160" height="90" alt="avatar"/>
+                            <div class="chat-item-img">
+                                <img class="chat-img" src="/static/images/avatar.png" width="160" height="90" alt="avatar"/>
+                            </div>
                                 <div class="chat-about">
                                     <div class="chat-item-name">{{user_name}}</div>
                                     <div class="chat-item-message">{{last_message}}</div>
@@ -44,7 +46,7 @@
             
                 <div class="chat-container-profile-head">
                     <div class="chat-container-profile-head-column">
-                    <img class="chat-item-img" src="/static/images/avatar.png" alt="avatar"/>
+                    <img class="chat-img" src="/static/images/avatar.png" alt="avatar"/>
                     <div class="chat-item-name chat-name-header">{{data.profile.first_name}} {{data.profile.second_name}}</div>
                     <button class="chat-item-button-info">
                         <img class="chat-container-button-info-icon" src="/static/images/points.png" alt="info">
@@ -69,7 +71,7 @@
                 </div>
 
                 <div class="chat-container-footer">
-                    <input type="text" class="chat-container-footer-input" placeholder="Сообщение">
+                    <input type="text" name="message" class="chat-container-footer-input" placeholder="Сообщение">
                     <button class="chat-container-button">
                         <img class="chat-container-button-send-icon" src="/static/images/send.png" alt="send message">
                     </button>

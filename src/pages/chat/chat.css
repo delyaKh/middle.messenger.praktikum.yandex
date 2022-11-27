@@ -94,8 +94,12 @@ margin: 10px;
 .chat-name-header{  
   margin-top: 15px;
 }
-
 .chat-item-img{
+  bottom: 0;
+  margin: auto 0;
+}
+
+.chat-img{
   display: block;
     width: 47px;
     height: 47px;
@@ -105,14 +109,18 @@ margin: 10px;
 
 }
 .chat-about{
-    display: inline-block;
+    display: block;
     padding: 0px;
     margin-top: 15px;
+    bottom: 0;
+    margin: auto 0;
 }
 
 .chat-item-about2{
   display: block;
   margin-top: 15px;
+  bottom: 0;
+  margin: auto 0;
 }
 
 .chat-item-about-rows{
@@ -137,6 +145,7 @@ grid-template-rows: 1fr 1fr;
   border-radius: 50%;
   background-color:#3369F3;
   text-align: right;
+  margin-left: 10px;
 }
 
 .chat-item-unread-text{
