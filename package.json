@@ -5,7 +5,7 @@
     "scripts": {
         "start": "parcel build ./src/pages/index/index.hbs && node server.js",
         "dev": "parcel ./src/pages/index/index.hbs --port 3000 --no-cache",
-        "build": "npm run dev",
+        "build": "parcel ./src/pages/index/index.hbs --port 3000 --no-cache",
         "build:old": "parcel build ./src/pages/**/*.hbs",
         "test": "parcel build ./src/pages/**/*.hbs & parcel ./src/pages/index/index.hbs --port 3000 --no-cache"
     },
