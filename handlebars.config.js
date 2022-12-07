@@ -1,3 +1,4 @@
 module.exports={
-    data:'src/data'
+    data:'src/data',
+    partials:'src/pages'
 }
