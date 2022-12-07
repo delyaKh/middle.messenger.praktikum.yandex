@@ -172,10 +172,28 @@ grid-template-rows: 1fr 1fr;
     padding: 5px 0;
 
 }
-.chat-main .chat-container{
+
+ .chat-container{
+  padding: 5px;
+  display: none;
+}
+
+.chat-main .chat-empty-container{
   padding: 5px;
   display: block;
 }
+
+.empty-text{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  text-align: center;
+  color: #999999;
+  margin: 30% 0;
+}
+
 .chat-container-rows{
   height: 100%;
   display: grid;

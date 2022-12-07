@@ -17,7 +17,7 @@
                 
                 <ul class="chat-list-ui">
                 {{#each data.people_list}}
-                    <li class="chat-item">
+                    <li class="chat-item" onclick="{openChatRoom()}">
                         <div class="chat-item-info">
                             <div class="chat-item-img">
                                 <img class="chat-img" src="/static/images/avatar.png" width="160" height="90" alt="avatar"/>
@@ -40,8 +40,12 @@
                 </ul>
 
         </div>
-
-        <div class="chat-container">
+        <div id="empty" class="chat-empty-container">
+            <div  class="empty-text">
+                Выберите чат чтобы отправить сообщение
+            </div>
+        </div>
+        <div id="room" class="chat-container">
         <div class="chat-container-rows">
             
                 <div class="chat-container-profile-head">
@@ -79,5 +83,6 @@
         </div>        
         </div>    
     </div>
+    <script src="./chat.js" type="module"></script>
 </body>
 </html>
