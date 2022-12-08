@@ -1,7 +1,7 @@
 # Чат
 
 * Макет в Figma: [https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=1%3A103&t=QGQTbq1ACV3F5Rgb-0]
-* Опубликованное в Netlify приложение: [https://wonderful-brioche-f9405f.netlify.app]
+* Опубликованное в Netlify приложение: [https://benevolent-faun-df69c1.netlify.app]
 
 # Задание
 
