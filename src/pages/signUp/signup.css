@@ -1,3 +1,4 @@
+@import '/src/stylesheets/constants.css';
 html {
     display:flex;
     align-items:center;
@@ -8,7 +9,7 @@ html {
   }
 
   body {
-    background-color:#fff;
+    background-color:var(--white);
     height: 100%;
     width: 100%;
     margin: 0px;
@@ -24,7 +25,7 @@ html {
     height: 450px;
     left: 600px;
     top: 135px;
-    background: #FFFFFF;
+    background: var(--white);
     text-align: center;
     line-height: 40px;
     border: 0px solid;
@@ -38,7 +39,7 @@ html {
     padding:50px 0px;
     border-radius:10px;
     box-shadow:4px 4px 15px rgba(0, 0, 0, 0.2);
-    background-color:#fff;
+    background-color:var(--white);
   }
 
   .auth .auth-title{
@@ -47,7 +48,7 @@ html {
     font-style: normal;
     font-weight: 500;
     font-size: 20px;
-    color: #1E1E1E;
+    color: var(--black);
   }
 .auth .auth-inputs{
     display: block;
@@ -58,11 +59,11 @@ html {
     text-align:center;
     font-weight: 500;
     border: none;
-    border-bottom: 2px solid #3f93ff
+    border-bottom: 2px solid var(--blue)
   }
   
   .auth .auth-input:invalid:required{
-    border-bottom: 2px solid #ff0000;
+    border-bottom: 2px solid var(--red);
   }
 
   .auth .auth-input:focus{
@@ -70,21 +71,21 @@ html {
   }
 
   .auth-input:invalid:required{
-    border-bottom: 2px solid #ff0000;
+    border-bottom: 2px solid var(--red);
   }
 
   .auth .button-create{
     width: 280px;
     height: 37px;  
     text-align:center;
-    background: #3369F3;
-    border: 0px solid #3369F3;
+    background: var(--blue);
+    border: 0px solid var(--blue);
     border-radius: 8px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    color: #FFFFFF;
+    color: var(--white);
   }
   .auth-link{
     display: block;
@@ -92,6 +93,6 @@ html {
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    color: #3369F3;  
+    color: var(--blue);  
     text-align:center;
   }

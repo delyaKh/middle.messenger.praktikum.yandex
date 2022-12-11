@@ -1,3 +1,4 @@
+@import '/src/stylesheets/constants.css';
 html {
   display:flex;
   align-items:center;
@@ -8,7 +9,7 @@ html {
 }
 
 body {
-  background-color:#fff;
+  background-color:var(--white);
   height: 100%;
   width: 100%;
   margin: 0px;
@@ -35,7 +36,7 @@ font-weight: 500;
 font-size: 20px;
 line-height: 40px;
 text-align: center;
-color: #1E1E1E;
+color: var(--black);
 }
 
 .auth-link{
@@ -43,7 +44,7 @@ color: #1E1E1E;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  color: #3369F3;  
+  color: var(--blue);  
   text-align:center;
   margin-top:20px;
 } 
