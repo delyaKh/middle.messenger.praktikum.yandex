@@ -1,0 +1,47 @@
+{{!< app-wrapper }}
+
+  <title>Авторизация</title>
+  <link rel="stylesheet" href="./auth.css"></link>
+</head>
+<body class="body">
+<main class="main">
+<div class="auth">
+
+ <form class="form">
+        <div class="auth-title">Вход</div>
+
+        <div class="form-group">
+            <input 
+            class="form-control auth-input" 
+            type="text" 
+            name="login" 
+            pattern="^[a-zA-Z0-9_.-]*$" 
+            id="login" 
+            placeholder="Логин" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control auth-input" 
+            type="password" 
+            name="password" 
+            minlength="6" 
+            id="password" 
+            placeholder="Пароль" required>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-block button-create" 
+            type="submit" 
+            onClick="{btnHandler()}">Авторизоваться</button>
+        </div>
+       <div class="auth-link">
+         <a href="/src/pages/signUp/signup.hbs">Нет аккаунта?</a>
+      </div>
+    </form>
+    
+</div>
+</main> 
+    
+   <script src="./auth.js" type="module"></script> 
+</body>
+</html>
+   
+ 

@@ -1,0 +1,138 @@
+@import '/src/stylesheets/constants.css';
+
+html {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    height:100%;
+  }
+
+body {
+    background-color:var(--white);
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+  }
+
+  .main{
+    height: 100%;
+  }
+
+  .profile-wrap{
+    position: absolute;
+    height: 500px;
+    left: 600px;
+    top: 120px;
+    background: var(--white);
+    line-height: 40px;
+    border: 0px solid;
+  }
+
+  .form {
+    background-color:var(--white);
+  }
+
+  
+
+  .profile-input-form{
+    display: grid;
+    grid-template-columns: 80px 290px;
+    column-gap: 5px;
+  }
+
+  .profile-input-password-form{
+    display: grid;
+    grid-template-columns: 110px 290px;
+    column-gap: 5px;
+  }
+
+  .profile-name{
+    text-align: center;
+  }
+
+  .profile-image{
+    text-align: center;
+  }
+
+  .profile-label{
+    display: block;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: var(--black);
+    text-align: left;
+    left: 50%;
+    top: 50%;
+    margin-top: 12px;
+  }
+
+  .profile-input{   
+    display: block;
+    width: 280px;
+    height: 25px;
+    text-align:center;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid var(--gray);
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: right;
+    color: var(--medium-gray);
+  }
+  .profile-input:focus{
+    outline-width: 0;
+  }
+
+  .profile-link{
+    margin-top:20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: var(--blue);
+    border-bottom: 2px solid var(--gray);
+  }
+
+  .profile-button{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: var(--red);
+    border: none;
+    background-color: var(--white);
+  }
+
+  .profile-button-form{
+  text-align: center;
+  }
+
+  .profile-button-save{
+    margin-top: 40px;
+    width: 200px;
+    height: 37px;  
+    text-align:center;
+    background: var(--blue);
+    border: 0px solid var(--blue);
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--white);
+  }
+
+  .profile-item-img{
+    width: 160px;
+    height: 140px;
+  }
+
