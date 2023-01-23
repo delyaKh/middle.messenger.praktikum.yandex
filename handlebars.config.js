@@ -1,4 +1,4 @@
-module.exports={    
-    data:'src/data',
-    partials:'src/partials'
-}
+module.exports = {
+  data: 'src/data',
+  partials: 'src/partials',
+};
