@@ -115,7 +115,7 @@ export default class Block {
         this._element.innerHTML = "";
         this._element.append(blockElements);
         const markerElements = this._element.querySelectorAll("[data-uuid]");
-        this._renderChildComponents(markerElements);
+        // this._renderChildComponents(markerElements);
         this._element.removeAttribute("data-uuid");
       }
     }
