@@ -1,16 +1,19 @@
-import EventBus from "./EventBus";
 import { getTemplateFromString } from "../utils/getTemplateFromString";
+import EventBus from "./EventBus";
 
 type TProps = Record<string, any>;
 
 export default class Block {
+  public props: TProps;
+  public id: number;
+  public children: { [id: string]: Block } = {};
+
   private _element: HTMLElement;
   private _meta: {
     tagName: string;
     props: TProps;
   };
   private eventBus: () => EventBus;
-  public props: TProps;
 
   static EVENTS = {
     INIT: "init",
@@ -68,6 +71,44 @@ export default class Block {
     this.getContent().style.display = "none";
   }
 
+  protected compile(template: (context: any) => string, context: any) {
+    const propsAndStubs = { ...context };
+
+    Object.entries(this.children).forEach(([key, component]) => {
+      if (Array.isArray(component)) {
+        propsAndStubs[key] = component.map(
+          (child) => `<div data-id="id-${child.id}"></div>`
+        );
+      } else {
+        propsAndStubs[key] = `<div data-id="id-${component.id}"></div>`;
+      }
+    });
+
+    const htmlString = template(propsAndStubs);
+    const temp = document.createElement("template");
+    temp.innerHTML = htmlString;
+
+    const replaceStub = (component: Block) => {
+      const stub = temp.content.querySelector(`[data-id="id-${component.id}"]`);
+
+      if (!stub) {
+        return;
+      }
+
+      component.getContent()?.append(...Array.from(stub.childNodes));
+      stub.replaceWith(component.getContent()!);
+    };
+
+    Object.entries(this.children).forEach(([_, component]) => {
+      if (Array.isArray(component)) {
+        component.forEach(replaceStub);
+      } else {
+        replaceStub(component);
+      }
+    });
+    return temp.content;
+  }
+
   protected componentDidMount(oldProps?: TProps) {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
@@ -76,7 +117,7 @@ export default class Block {
     return oldProps !== newProps;
   }
 
-  protected render(): void | string {}
+  protected render(): any {}
 
   private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
@@ -114,9 +155,9 @@ export default class Block {
         const blockElements = template.content.cloneNode(true);
         this._element.innerHTML = "";
         this._element.append(blockElements);
-        const markerElements = this._element.querySelectorAll("[data-uuid]");
+        // const markerElements = this._element.querySelectorAll("[data-uuid]");
         // this._renderChildComponents(markerElements);
-        this._element.removeAttribute("data-uuid");
+        // this._element.removeAttribute("data-uuid");
       }
     }
     this._addEvents();

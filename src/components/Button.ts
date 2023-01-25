@@ -1,17 +1,40 @@
 import Block from "../classes/Block";
+import template from "../components/button.hbs";
 
 interface ButtonProps {
   className: string;
+  type?: string;
+  icon?: string;
+  light?: boolean;
+  color?: string;
+  label?: string;
+  title?: string;
   child: string;
+  onClick?: () => void;
 }
+
+const className = "";
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
-    super("button", props);
+    super("button", {
+      className: className,
+      type: props.type ?? "button",
+      icon: props.icon ?? "",
+      light: props.light ?? false,
+      color: props.color ?? "",
+      label: props.label ?? "",
+      title: props.title ?? "",
+      child: props.child,
+      events: {
+        click: props.onClick,
+      },
+    });
   }
 
-  protected render(): string | void {
+  protected render(): any {
     super.render();
-    // return compile(template, this.props);
+    const result = this.compile(template, this.props);
+    return result;
   }
 }
