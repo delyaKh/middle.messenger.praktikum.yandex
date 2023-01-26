@@ -34,7 +34,7 @@ export default class Block {
 
     this._registerEvents(eventBus);
 
-    eventBus.emit(Block.EVENTS.INIT);
+    this.eventBus().emit(Block.EVENTS.INIT);
   }
 
   get element() {
@@ -70,42 +70,27 @@ export default class Block {
     this.getContent().style.display = "none";
   }
 
-  protected compile(template: (context: any) => string, context: any) {
-    const propsAndStubs = { ...context };
+  protected compile(template: string, props: TProps) {
+    const propsAndStubs = { ...props };
 
-    Object.entries(this.children).forEach(([key, component]) => {
-      if (Array.isArray(component)) {
-        propsAndStubs[key] = component.map(
-          (child) => `<div data-id="id-${child.id}"></div>`
-        );
-      } else {
-        propsAndStubs[key] = `<div data-id="id-${component.id}"></div>`;
+    Object.entries(this.children).forEach(([key, child]) => {
+      propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+    });
+
+    const fragment = this._createDocumentElement("template");
+
+    fragment.innerHTML = template;
+
+    Object.values(this.children).forEach((child) => {
+      // @ts-ignore
+      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+      if (stub) {
+        stub.replaceWith(child.getContent());
       }
     });
 
-    const htmlString = template(propsAndStubs);
-    const temp = document.createElement("template");
-    temp.innerHTML = htmlString;
-
-    const replaceStub = (component: Block) => {
-      const stub = temp.content.querySelector(`[data-id="id-${component.id}"]`);
-
-      if (!stub) {
-        return;
-      }
-
-      component.getContent()?.append(...Array.from(stub.childNodes));
-      stub.replaceWith(component.getContent()!);
-    };
-
-    Object.entries(this.children).forEach(([_, component]) => {
-      if (Array.isArray(component)) {
-        component.forEach(replaceStub);
-      } else {
-        replaceStub(component);
-      }
-    });
-    return temp.content;
+    // @ts-ignore
+    return fragment.content;
   }
 
   protected componentDidMount(oldProps?: TProps) {
@@ -143,39 +128,16 @@ export default class Block {
   }
 
   private _render() {
-    const html = this.render();
+    const block = this.render();
     this._removeEvents();
+    // @ts-ignore
+    const newElement = block.firstElementChild;
 
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    div.querySelectorAll("[data-child]").forEach((el) => {
-      const name = el.getAttribute("data-child");
-      if (this.props.children && name) {
-        // @ts-ignore
-        el.replaceWith(this.props.children[name]);
-      }
-    });
-
+    if (this._element) {
+      this._element.replaceWith(newElement);
+    }
+    this._element = newElement;
     this._addEvents();
-
-    // const blockHTML = this.render();
-    // this._removeEvents();
-    // if (blockHTML) {
-    //   const template =
-    //     blockHTML as HTMLTemplateElement; /* getTemplateFromString(blockHTML) */
-    //   if (template) {
-    //     template?.getAttributeNames()?.forEach((name) => {
-    //       this._element.setAttribute(name, template.getAttribute(name) || "");
-    //     });
-    //     const blockElements = template.content.cloneNode(true);
-    //     this._element.innerHTML = "";
-    //     this._element.append(blockElements);
-    //     // const markerElements = this._element.querySelectorAll("[data-uuid]");
-    //     // this._renderChildComponents(markerElements);
-    //     // this._element.removeAttribute("data-uuid");
-    //   }
-    // }
-    // this._addEvents();
   }
 
   private _removeEvents() {

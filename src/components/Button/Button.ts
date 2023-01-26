@@ -1,4 +1,4 @@
-import Block from "../classes/Block";
+import Block from "../../classes/Block";
 
 interface ButtonProps {
   className: string;
@@ -34,7 +34,7 @@ export default class Button extends Block {
 
   protected render(): any {
     super.render();
-    const result = this.compile(() => template, this.props);
+    const result = this.compile(template, this.props);
     return result;
   }
 }

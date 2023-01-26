@@ -1,4 +1,4 @@
-import Block from "../classes/Block";
+import Block from "../../classes/Block";
 
 interface ErrorProps {
   code: string;
@@ -22,6 +22,6 @@ export default class Error extends Block {
   }
 
   protected render(): any {
-    return this.compile(() => template, this.props);
+    return this.compile(template, this.props);
   }
 }
