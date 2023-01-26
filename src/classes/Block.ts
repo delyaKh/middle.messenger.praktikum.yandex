@@ -1,4 +1,3 @@
-import { getTemplateFromString } from "../utils/getTemplateFromString";
 import EventBus from "./EventBus";
 
 type TProps = Record<string, any>;
@@ -147,9 +146,10 @@ export default class Block {
     const blockHTML = this.render();
     this._removeEvents();
     if (blockHTML) {
-      const template = getTemplateFromString(blockHTML);
+      const template =
+        blockHTML as HTMLTemplateElement; /* getTemplateFromString(blockHTML) */
       if (template) {
-        template.getAttributeNames().forEach((name) => {
+        template?.getAttributeNames()?.forEach((name) => {
           this._element.setAttribute(name, template.getAttribute(name) || "");
         });
         const blockElements = template.content.cloneNode(true);

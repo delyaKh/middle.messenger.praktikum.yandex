@@ -1,18 +1,11 @@
-/* import error from './notFoundError.hbs';
+import Block from "../../classes/Block";
 
-document.addEventListener('DOMContentLoaded', ()=>
-{
-    const html = auth();
-    const root = document.querySelector("#signup");
-    root.innerHTML = html;
-}) */
-function notFoundError(){
-
-    return `<div class="error-form">404</div>
-    <div class="error-form">Не туда попали</div>
-    <div class="create-account">
-        <a href="">Назад к чатам</a>
+export default class NotFoundPage extends Block {
+  render() {
+    const template = `<div class="error-form">
+    {{{Error code='404' text='Не туда попали' link='Назад к чатам'}}}
     </div>`;
-}
 
-document.body.innerHTML = notFoundError();
+    return this.compile(() => template, this.props);
+  }
+}

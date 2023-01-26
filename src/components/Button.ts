@@ -1,5 +1,4 @@
 import Block from "../classes/Block";
-import template from "../components/button.hbs";
 
 interface ButtonProps {
   className: string;
@@ -14,6 +13,7 @@ interface ButtonProps {
 }
 
 const className = "";
+const template = "button #{className}";
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
@@ -34,7 +34,7 @@ export default class Button extends Block {
 
   protected render(): any {
     super.render();
-    const result = this.compile(template, this.props);
+    const result = this.compile(() => template, this.props);
     return result;
   }
 }
