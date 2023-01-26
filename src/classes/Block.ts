@@ -143,24 +143,39 @@ export default class Block {
   }
 
   private _render() {
-    const blockHTML = this.render();
+    const html = this.render();
     this._removeEvents();
-    if (blockHTML) {
-      const template =
-        blockHTML as HTMLTemplateElement; /* getTemplateFromString(blockHTML) */
-      if (template) {
-        template?.getAttributeNames()?.forEach((name) => {
-          this._element.setAttribute(name, template.getAttribute(name) || "");
-        });
-        const blockElements = template.content.cloneNode(true);
-        this._element.innerHTML = "";
-        this._element.append(blockElements);
-        // const markerElements = this._element.querySelectorAll("[data-uuid]");
-        // this._renderChildComponents(markerElements);
-        // this._element.removeAttribute("data-uuid");
+
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    div.querySelectorAll("[data-child]").forEach((el) => {
+      const name = el.getAttribute("data-child");
+      if (this.props.children && name) {
+        // @ts-ignore
+        el.replaceWith(this.props.children[name]);
       }
-    }
+    });
+
     this._addEvents();
+
+    // const blockHTML = this.render();
+    // this._removeEvents();
+    // if (blockHTML) {
+    //   const template =
+    //     blockHTML as HTMLTemplateElement; /* getTemplateFromString(blockHTML) */
+    //   if (template) {
+    //     template?.getAttributeNames()?.forEach((name) => {
+    //       this._element.setAttribute(name, template.getAttribute(name) || "");
+    //     });
+    //     const blockElements = template.content.cloneNode(true);
+    //     this._element.innerHTML = "";
+    //     this._element.append(blockElements);
+    //     // const markerElements = this._element.querySelectorAll("[data-uuid]");
+    //     // this._renderChildComponents(markerElements);
+    //     // this._element.removeAttribute("data-uuid");
+    //   }
+    // }
+    // this._addEvents();
   }
 
   private _removeEvents() {
