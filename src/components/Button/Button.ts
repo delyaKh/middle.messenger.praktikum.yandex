@@ -1,40 +1,32 @@
 import Block from "../../classes/Block";
 
-interface ButtonProps {
-  className: string;
-  type?: string;
-  icon?: string;
-  light?: boolean;
-  color?: string;
-  label?: string;
-  title?: string;
-  child: string;
-  onClick?: () => void;
+export interface ButtonProps {
+  className?: string;
+  primary?: boolean;
+  secondary?: boolean;
+  link?: boolean;
+  href?: string;
+  events: {
+    click: () => void;
+  };
 }
 
-const className = "";
-const template = "button #{className}";
+let template = "button #{child}";
 
 export default class Button extends Block {
   constructor(props: ButtonProps) {
-    super("button", {
-      className: className,
-      type: props.type ?? "button",
-      icon: props.icon ?? "",
-      light: props.light ?? false,
-      color: props.color ?? "",
-      label: props.label ?? "",
-      title: props.title ?? "",
-      child: props.child,
-      events: {
-        click: props.onClick,
-      },
-    });
+    if (props.link) {
+      template = `a(href="${props.href}") #{child}`;
+    }
+    super("div", props);
   }
 
-  protected render(): any {
-    super.render();
-    const result = this.compile(template, this.props);
-    return result;
+  render() {
+    return this.compile(
+      template,
+      this.props
+    )({
+      child: this.props.child,
+    });
   }
 }

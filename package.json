@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "messanger project for yandex.praktikum",
   "scripts": {
-    "start": "parcel build ./src/pages/index/index.hbs && node server.js",
-    "dev": "parcel ./src/index.html --port 3000 --no-cache --open",
-    "build": "parcel build ./src/pages/index/index.hbs",
-    "test": "parcel build ./src/pages/**/*.hbs & parcel ./src/pages/index/index.hbs --port 3000 --no-cache",
+    "start": "parcel build ./src/index.html && node server.js",
+    "dev": "parcel ./static/pages/index.html --port 3000 --no-cache --open",
+    "build": "parcel build ./static/pages/*.html",
+    "test": "parcel build ./src/pages/**/*.hbs & parcel ./src/index.html --port 3000 --no-cache",
     "tsc:w": "tsc -w"
   },
   "keywords": [],

@@ -6,15 +6,13 @@ export default class notFoundError extends Block {
     const template = `<div class="error-form">
     <main class="main">
 <div class="error-container">
-    <div class="error-form">{{code}}</div>
-    <div class="error-form">{{text}}</div>
+    <div class="error-form">404</div>
+    <div class="error-form">Не туда попали</div>
     <div class="auth-link">
-        <a href="/src/pages/chat/chat.hbs">{{link}}</a>
+        <a href="/src/pages/chat/chat.hbs">Вернуться к чатам</a>
     </div>
 </div>
-</main>
-    
-    </div>`;
+</main>`;
 
     return this.compile(template, this.props);
   }

@@ -1,7 +1,7 @@
 import Home from "./pages/home/home.component";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const homePage = new Home("div", {});
+  const homePage = new Home({});
   const root = document.querySelector("#app");
 
   if (!root) {
