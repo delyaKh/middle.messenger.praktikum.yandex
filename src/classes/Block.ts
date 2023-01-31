@@ -70,7 +70,30 @@ export default class Block {
     this.getContent().style.display = "none";
   }
 
-  protected compile(template: string, props: TProps) {
+  // protected compile(template: (context: any) => string, props: TProps) {
+  //   const propsAndStubs = { ...props };
+
+  //   Object.entries(this.children).forEach(([key, child]) => {
+  //     propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+  //   });
+
+  //   const fragment = this._createDocumentElement("template");
+
+  //   fragment.innerHTML = template(propsAndStubs);
+
+  //   Object.values(this.children).forEach((child) => {
+  //     // @ts-ignore
+  //     const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+  //     if (stub) {
+  //       stub.replaceWith(child.getContent());
+  //     }
+  //   });
+
+  //   // @ts-ignore
+  //   return fragment.content;
+  // }
+
+  protected compile(template: (context: any) => string, props: TProps) {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
@@ -79,16 +102,14 @@ export default class Block {
 
     const fragment = this._createDocumentElement("template");
 
-    fragment.innerHTML = template;
+    fragment.innerHTML = template(propsAndStubs);
 
     Object.values(this.children).forEach((child) => {
       // @ts-ignore
       const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-      if (stub) {
-        stub.replaceWith(child.getContent());
-      }
-    });
 
+      stub.replaceWith(child.getContent());
+    });
     // @ts-ignore
     return fragment.content;
   }

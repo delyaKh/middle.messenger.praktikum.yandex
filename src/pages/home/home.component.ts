@@ -1,3 +1,4 @@
+import Handlebars from "handlebars";
 import Block from "../../classes/Block";
 import "./home.component.scss";
 
@@ -34,7 +35,7 @@ export default class Home extends Block {
              </ui>
     </nav>
       </main>`;
-
-    return this.compile(template, this.props);
+    const res = Handlebars.compile(template);
+    return this.compile(res, this.props);
   }
 }

@@ -23,7 +23,7 @@ export default class Button extends Block {
 
   render() {
     return this.compile(
-      template,
+      () => template,
       this.props
     )({
       child: this.props.child,
