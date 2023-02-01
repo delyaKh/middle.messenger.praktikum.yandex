@@ -1,6 +1,6 @@
 import Handlebars from "handlebars";
 import Block from "../../classes/Block";
-import "./home.component.scss";
+import "./home.scss";
 
 export default class Home extends Block {
   constructor(props: any) {
@@ -27,7 +27,7 @@ export default class Home extends Block {
                 <a href="/notFoundError.html">Страница не найдена</a>
                 </li>
                 <li class="item">
-                <a href="/notFoundError.html">Серверая ошибка 500</a>
+                <a href="/serverError.html">Серверая ошибка 500</a>
                 </li>
                 <li class="item">
                 <a href="/notFoundError.html">Профиль</a>

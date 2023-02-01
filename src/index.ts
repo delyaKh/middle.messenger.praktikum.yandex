@@ -1,4 +1,4 @@
-import Home from "./pages/home/home.component";
+import Home from "./pages/home/home";
 
 document.addEventListener("DOMContentLoaded", () => {
   const homePage = new Home({});

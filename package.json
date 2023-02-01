@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel build ./src/index.html && node server.js",
     "dev": "parcel ./static/pages/*.html --port 3000 --no-cache --open",
-    "build": "parcel build ./static/pages/*.html",
+    "build": "parcel build ./static/pages/*.html --no-cache",
     "test": "parcel build ./src/pages/**/*.hbs & parcel ./src/index.html --port 3000 --no-cache",
     "tsc:w": "tsc -w"
   },
@@ -30,6 +30,15 @@
     "handlebars": "^4.7.7",
     "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
     "express": "4.18.2"
+  },
+  "targets": {
+    "browserModern": {
+      "engines": {
+        "browsers": [
+          "last 1 Chrome version"
+        ]
+      }
+    }
   },
   "engines": {
     "node": ">=12.0.0"
