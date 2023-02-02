@@ -22,7 +22,7 @@ export default class ServerErrorPage extends Block {
         <div class="error-form">{{ errorCode }}</div>
         <div class="error-form">{{ errorMessage }}</div>
         <div class="auth-link">
-          <a>Вернуться к чатам</a>
+          <a href="./chat.html">Вернуться к чатам</a>
         </div>
       </div>
     </main>

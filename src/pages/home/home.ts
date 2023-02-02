@@ -15,13 +15,13 @@ export default class Home extends Block {
       <nav class="nav-container">
              <ui class="form">
                 <li class="item">
-                <a href="/notFoundError.html">Авторизация</a>
+                <a href="/auth.html">Авторизация</a>
                 </li>
                 <li class="item">
-                <a href="./notFoundError.html">Регистрация</a>
+                <a href="./registration.html">Регистрация</a>
                 </li>
                 <li class="item">
-                <a href="/notFoundError.html">Переход к чатам</a>
+                <a href="/chat.html">Переход к чатам</a>
                 </li>
                 <li class="item">
                 <a href="/notFoundError.html">Страница не найдена</a>
@@ -30,11 +30,11 @@ export default class Home extends Block {
                 <a href="/serverError.html">Серверая ошибка 500</a>
                 </li>
                 <li class="item">
-                <a href="/notFoundError.html">Профиль</a>
+                <a href="/profile.html">Профиль</a>
                 </li>
              </ui>
-    </nav>
-      </main>`;
+      </nav>
+    </main>`;
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);
   }
