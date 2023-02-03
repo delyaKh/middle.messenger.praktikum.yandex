@@ -1,32 +1,48 @@
+import Handlebars from "handlebars";
 import Block from "../../classes/Block";
 
 export interface ButtonProps {
+  name: string;
+  type?: string;
   className?: string;
   primary?: boolean;
   secondary?: boolean;
-  link?: boolean;
   href?: string;
   events: {
-    click: () => void;
+    click?: (event?: any) => void;
+    submit?: (event?: any) => void;
   };
 }
 
-let template = "button #{child}";
-
 export default class Button extends Block {
   constructor(props: ButtonProps) {
-    if (props.link) {
-      template = `a(href="${props.href}") #{child}`;
-    }
     super("div", props);
   }
 
-  render() {
-    return this.compile(
-      () => template,
-      this.props
-    )({
-      child: this.props.child,
+  _addEvents(): void {
+    if (!this.props.events) {
+      return;
+    }
+
+    console.log(this.props.error);
+
+    this.element.querySelectorAll("button").forEach((x) => {
+      const { click, submit } = this.props.events as {
+        [key: string]: () => void;
+      };
+      x.addEventListener("click", click);
+      x.addEventListener("submit", submit);
     });
+    super._addEvents();
+  }
+
+  render() {
+    const template = `<div class="form-group">
+    <button class="btn btn-primary btn-block button-create" 
+    type="{{type}}">{{name}}</button>
+    </div>`;
+
+    const res = Handlebars.compile(template);
+    return this.compile(res, this.props);
   }
 }

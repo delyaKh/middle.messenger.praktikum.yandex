@@ -138,15 +138,21 @@ export default class Block {
     this._addEvents();
   }
 
-  private _removeEvents() {
+  _removeEvents() {
     const { events = {} } = this.props;
+    if (!events) {
+      return;
+    }
     Object.keys(events).forEach((eventName) => {
       this._element.removeEventListener(eventName, events[eventName]);
     });
   }
 
-  private _addEvents() {
+  _addEvents() {
     const { events = {} } = this.props;
+    if (!events) {
+      return;
+    }
     Object.keys(events).forEach((eventName) => {
       this._element.addEventListener(eventName, events[eventName]);
     });

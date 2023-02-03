@@ -2,6 +2,7 @@ import Handlebars from "handlebars";
 import Block from "../../classes/Block";
 
 interface InputProps {
+  id: string;
   className: string;
   type: string;
   name?: string;
@@ -9,39 +10,68 @@ interface InputProps {
   pattern?: string;
   value?: string;
   error?: string;
-  onInput?: (event?: any) => void;
-  onFocus?: (event?: any) => void;
-  onBlur?: (event?: any) => void;
+  required?: string;
+  minLength?: number;
+  maxLength?: number;
+  events: {
+    focus?: (event?: any) => void;
+    blur?: (event?: any) => void;
+    input?: (event?: any) => void;
+    submit?: (event?: any) => void;
+  };
 }
 
 export default class Input extends Block {
   constructor(props: InputProps) {
-    super("div", {
-      events: {
-        input: props.onInput,
-        focus: props.onFocus,
-        blur: props.onBlur,
-      },
-      ...props,
+    super("div", props);
+  }
+
+  _addEvents(): void {
+    if (!this.props.events) {
+      return;
+    }
+
+    console.log(this.props.error);
+
+    this.element.querySelectorAll("input").forEach((x) => {
+      const { input, focus, blur, submit } = this.props.events as {
+        [key: string]: () => void;
+      };
+      x.addEventListener("focus", focus);
+      x.addEventListener("blur", blur);
+      x.addEventListener("input", input);
+      x.addEventListener("submit", submit);
     });
+    super._addEvents();
   }
 
   render() {
     const template = `
     <div class="profile-input-form">
         <label class="profile-label">{{label}}</label>
-        <input class="{{className}}" name="{{label}}" type="{{type}}" placeholder="{{placeholder}}"
+        <input class="{{className}}" id="{{id}}" name="{{label}}" type="{{type}}" placeholder="{{placeholder}}"
             {{#if value}}
             value={{value}}
             {{else}}
             value=""
+            {{/if}} 
+
+            {{#if minLength}}
+            minlength = {{minLength}}
             {{/if}}
-            onInput={{onInput}}
-            onBlur={{onBlur}}
-            onFocus={{onFocus}}
-        />
+
+            {{#if maxLength}}
+            maxlength={{maxLength}}
+            {{/if}}
+
+            {{#if required}}
+            required
+            {{/if}}
+        />    
         {{#if error}}
-            <p>{{error}}</p>
+        <p class="error-input">
+        {{error}}
+        </p>
         {{/if}}
     </div>`;
 

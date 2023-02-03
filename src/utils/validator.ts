@@ -1,74 +1,84 @@
 import Block from "../classes/Block";
 
-const validator = (component: Block) => {
-  console.log("Validate");
-  const errors: string[] = [];
-
-  Object.entries(component.children).forEach(([key, child]) => {
-    if (component.children[key].props.required) {
-      const required = child.props.required;
-      const name = child.props.name;
-
-      if (!required.text) {
-        required.text = "Required";
-      }
-
-      if (required.rules) {
-        if (!required.rules.min) {
-          required.rules.min = 1;
-        }
-
-        // @ts-ignore
-        const value = child.getContent().querySelector("input").value.trim();
-
-        if (value.length >= 1) {
-          if (required.rules.min) {
-            if (value.length < required.rules.min) {
-              errors[name] = required.text;
-            }
-          }
-
-          if (required.rules.max) {
-            if (value.length > required.rules.max) {
-              errors[name] = required.text;
-            }
-          }
-
-          if (required.rules.pattern) {
-            const re = new RegExp(required.rules.pattern);
-            if (re.test(value) === false) {
-              errors[name] = required.text;
-            }
-          }
-        }
-      }
-    }
-  });
-  if (!isEqual(component.props.errors, errors)) {
-    component.setProps({ errors });
+//Login validate
+export const checkLogin = (val: string, component: Block): boolean => {
+  if (isLogin(val)) {
+    component.children["login"].setProps({
+      value: val,
+      error: undefined,
+    });
+    return true;
+  } else {
+    component.children["login"].setProps({
+      value: val,
+      error: "Нужно ввести валидный логин",
+    });
+    return false;
   }
+};
+export const isLogin = (value: string) => {
+  return /^[a-zA-Z0-9-_]{3,20}$/.test(value);
+};
 
-  if (Object.entries(errors).length > 0) {
+//Email validate
+export const checkEmail = (val: string, component: Block): boolean => {
+  if (isEmail(val)) {
+    component.children["email"].setProps({
+      value: val,
+      error: undefined,
+    });
+    return true;
+  } else {
+    component.children["email"].setProps({
+      value: val,
+      error: "Нужно ввести валидный email",
+    });
+    return false;
+  }
+};
+export const isEmail = (value: string) => {
+  return /[7-9]{1}[0-9]{9}/.test(value);
+};
+
+//Phone validate
+export const checkPhone = (val: string, component: Block): boolean => {
+  if (isPhone(val)) {
+    component.children["phone"].setProps({
+      value: val,
+      error: undefined,
+    });
+    return true;
+  } else {
+    component.children["phone"].setProps({
+      value: val,
+      error: "Нужно ввести валидный телефон",
+    });
+    return false;
+  }
+};
+export const isPhone = (value: string) => {
+  return /^[a-zA-Z0-9_.-]*$/.test(value);
+};
+
+//Password validate
+export const checkPassword = (val: string, component: Block) => {
+  if (val.length > 6) {
+    component.children["password"]?.setProps({
+      value: val,
+      error: "Пароль не проходит проверку по максимальной длине",
+    });
+    return false;
+  } else if (val.length < 6) {
+    component.children["password"]?.setProps({
+      value: val,
+      error: "Пароль не проходит проверку по минимальной длине",
+    });
     return false;
   }
 
+  component.children["password"]?.setProps({
+    value: val,
+    error: undefined,
+  });
   return true;
 };
-
-function isEqual(componentErrors: string[], newErrors: string[]) {
-  if (componentErrors && newErrors) {
-    if (
-      Object.entries(componentErrors)?.length !==
-      Object.entries(newErrors)?.length
-    ) {
-      return false;
-    }
-
-    for (let i = 0; i < Object.entries(componentErrors).length; i++) {
-      if (componentErrors[i] !== newErrors[i]) return false;
-    }
-    return true;
-  }
-}
-
-export default validator;
