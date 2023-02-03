@@ -130,11 +130,12 @@ export default class Block {
     this._removeEvents();
     // @ts-ignore
     const newElement = block.firstElementChild;
-
-    if (this._element) {
-      this._element.replaceWith(newElement);
-    }
-    this._element = newElement;
+    this.element.innerHTML = "";
+    this.element.appendChild(newElement);
+    // if (this._element) {
+    //   this._element.replaceWith(newElement);
+    // }
+    // this._element = newElement;
     this._addEvents();
   }
 

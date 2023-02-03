@@ -13,53 +13,51 @@ export default class AuthPage extends Block {
   render() {
     const login = new Input({
       id: "login",
+      name: "login",
       type: "text",
       className: "form-control auth-input",
       placeholder: "Логин",
       required: "required",
       pattern: "^[a-zA-Z0-9_.-]*$",
       events: {
-        blur: () => {
+        blur: (event: InputEvent) => {
           // @ts-ignore
-          const _login = document.getElementById("login")?.value;
+          const _login = event?.target.value;
           checkLogin(_login, this);
         },
-        focus: () => {
+        focus: (event: InputEvent) => {
           // @ts-ignore
-          const _login = document.getElementById("login")?.value;
-          if (_login != null) {
-            checkLogin(_login, this);
-          }
+          // const _login = event?.target.value;
+          // checkLogin(_login, this);
         },
-        submit: () => {},
       },
     });
 
     const password = new Input({
       id: "password",
+      name: "password",
       type: "password",
       className: "form-control auth-input",
       placeholder: "Пароль",
       required: "required",
       minLength: 6,
       events: {
-        blur: () => {
+        blur: (event: InputEvent) => {
           // @ts-ignore
-          const _password = document.getElementById("password")?.value;
+          const _password = event?.target.value;
           checkPassword(_password, this);
         },
-        focus: () => {
+        focus: (event: InputEvent) => {
           // @ts-ignore
-          const _password = document.getElementById("password")?.value;
-          checkPassword(_password, this);
+          // const _password = event?.target.value;
+          // checkPassword(_password, this);
         },
-        submit: () => {},
       },
     });
 
     const button = new Button({
       name: "Авторизоваться",
-      type: "submit",
+      type: "button",
       events: {
         submit: () => {
           // @ts-ignore
@@ -74,13 +72,18 @@ export default class AuthPage extends Block {
             window.location.href = "./serverError.html";
           }
         },
-        click: () => {
+        click: (event: InputEvent) => {
           // @ts-ignore
           const _login = document.getElementById("login")?.value;
           // @ts-ignore
           const _password = document.getElementById("password")?.value;
-          checkLogin(_login, this);
-          checkPassword(_password, this);
+          var _checkLogin = checkLogin(_login, this);
+          var _checkPasword = checkPassword(_password, this);
+
+          if (_checkLogin && _checkPasword) {
+            console.log("is valid");
+            window.location.href = "./serverError.html";
+          }
         },
       },
     });
@@ -90,8 +93,12 @@ export default class AuthPage extends Block {
       <div class="auth">
           <form id="form" class="form">
             <div class="auth-title">Вход</div> 
-            {{{login}}}  
-            {{{password}}}                  
+            <div class="profile-input-form">
+            {{{login}}}
+            </div>  
+            <div class="profile-input-form">
+            {{{password}}}    
+            </div>              
             {{{button}}}
             <div class="auth-link">
               <a href="./registration.html">Нет аккаунта?</a>
@@ -109,6 +116,6 @@ export default class AuthPage extends Block {
   }
 }
 
-const notFoundErrorPage = new AuthPage({});
-const dom = notFoundErrorPage.render();
+const authPage = new AuthPage({});
+const dom = authPage.render();
 document.body.appendChild(dom);

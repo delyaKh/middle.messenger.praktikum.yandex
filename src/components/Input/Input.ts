@@ -47,8 +47,7 @@ export default class Input extends Block {
 
   render() {
     const template = `
-    <div class="profile-input-form">
-        <label class="profile-label">{{label}}</label>
+    <div>    
         <input class="{{className}}" id="{{id}}" name="{{label}}" type="{{type}}" placeholder="{{placeholder}}"
             {{#if value}}
             value={{value}}
@@ -73,7 +72,7 @@ export default class Input extends Block {
         {{error}}
         </p>
         {{/if}}
-    </div>`;
+        </div>`;
 
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);
