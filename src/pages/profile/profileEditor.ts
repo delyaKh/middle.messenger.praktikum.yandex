@@ -1,21 +1,193 @@
 import Handlebars from "handlebars";
 import Block from "../../classes/Block";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
+import {
+  checkAllForm,
+  checkEmail,
+  checkFirstName,
+  checkLogin,
+  checkPhone,
+  checkSecondName,
+} from "../../utils/validator";
+import { IProfileType } from "./profile";
 import "./profile.scss";
 
-interface IErrorProps {
-  errorCode?: string;
-  errorMessage?: string;
-}
 export default class ProfileEditorPage extends Block {
-  constructor(props: IErrorProps) {
-    const errorProps: IErrorProps = {
-      errorCode: "500",
-      errorMessage: "Мы уже фиксим",
-    };
-    super("div", errorProps);
+  constructor(props: any) {
+    super("div", props);
   }
 
+  private _profileValue: IProfileType = {
+    login: "",
+    email: "",
+    first_name: "",
+    second_name: "",
+    phone: "",
+  };
+
   render() {
+    const profile = {
+      _id: "1",
+      index: 0,
+      avatar: "/static/img/ava.png",
+      first_name: "Petr",
+      second_name: "Belov",
+      email: "petrbelov@mail.ru",
+      login: "PetrBelov",
+      nickname: "petr_belov",
+      phone: "+7(909)9673030",
+      password: "12345678",
+    };
+
+    const email = new Input({
+      id: "email",
+      name: "email",
+      type: "email",
+      className: "profile-input",
+      isValid: true,
+      placeholder: profile.email,
+      events: {
+        blur: () => {
+          // @ts-ignore
+          const _email = document.getElementById("email")?.value;
+          checkEmail(_email, this);
+        },
+        focus: () => {
+          // @ts-ignore
+          // const _email = document.getElementById("email")?.value;
+          // checkEmail(_email, this);
+        },
+      },
+    });
+
+    const login = new Input({
+      id: "login",
+      name: "login",
+      type: "text",
+      className: "profile-input",
+      isValid: true,
+      placeholder: profile.login,
+      events: {
+        blur: (event: InputEvent) => {
+          // @ts-ignore
+          const _login = event?.target.value;
+          checkLogin(_login, this);
+        },
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const first_name = new Input({
+      id: "first_name",
+      name: "first_name",
+      isValid: true,
+      type: "text",
+      placeholder: profile.first_name,
+      className: "profile-input",
+      events: {
+        blur: (event: InputEvent) => {
+          // @ts-ignore
+          const _first_name = event?.target.value;
+          checkFirstName(_first_name, this);
+        },
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const second_name = new Input({
+      id: "second_name",
+      name: "second_name",
+      isValid: true,
+      type: "text",
+      className: "profile-input",
+      placeholder: profile.second_name,
+      events: {
+        blur: (event: InputEvent) => {
+          // @ts-ignore
+          const _second_name = event?.target.value;
+          checkSecondName(_second_name, this);
+        },
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const phone = new Input({
+      id: "phone",
+      name: "phone",
+      type: "phone",
+      isValid: true,
+      className: "profile-input",
+      placeholder: profile.phone,
+      events: {
+        blur: (event: InputEvent) => {
+          // @ts-ignore
+          const _phone = event?.target.value;
+          checkPhone(_phone, this);
+        },
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const nickname = new Input({
+      id: "nickname",
+      name: "nickname",
+      type: "text",
+      placeholder: profile.nickname,
+      isValid: true,
+      className: "profile-input",
+      events: {
+        blur: (event: InputEvent) => {},
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const button = new Button({
+      className: "btn btn-primary btn-block profile-button-save",
+      name: "Сохранить",
+      type: "reset",
+      events: {
+        submit: () => {
+          this._profileValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+          };
+
+          if (checkAllForm(this._profileValue, this)) {
+            console.log(this._profileValue);
+            // window.location.href = "./chat.html";
+          }
+        },
+        click: () => {
+          this._profileValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+          };
+
+          if (checkAllForm(this._profileValue, this)) {
+            console.log(this._profileValue);
+            //window.location.href = "./profile.html";
+          }
+        },
+      },
+    });
+
     const template = `<main class="main">
     <div class="profile-wrap">
            <form class="form">
@@ -25,35 +197,35 @@ export default class ProfileEditorPage extends Block {
                        
                        <div class="profile-input-form">
                            <label class="profile-label">Почта</label>
-                           <input class="profile-input" name="email" value="{{ data.profile.email}}">
+                          {{{email}}}
                        </div>
    
                        <div class="profile-input-form">
                            <label class="profile-label">Логин</label>
-                           <input class="profile-input" name="login" value="{{ data.profile.login}}">
+                          {{{login}}}
                        </div>
    
                        <div class="profile-input-form">
                            <label class="profile-label">Имя</label>
-                           <input class="profile-input" name="first_name" value="{{ data.profile.first_name}}">
+                           {{{first_name}}}
                        </div>
    
                        <div class="profile-input-form">
                            <label class="profile-label">Фамилия</label>
-                           <input class="profile-input" name="second_name" value="{{ data.profile.second_name}}">
+                           {{{second_name}}}
                        </div>
    
                        <div class="profile-input-form">
                            <label class="profile-label">Имя в чате</label>
-                           <input class="profile-input"name="display_name" value="{{ data.profile.nickname}}">
+                           {{{nickname}}}
                        </div>
    
                        <div class="profile-input-form">
                            <label class="profile-label">Телефон</label>
-                           <input class="profile-input" name="phone" value="{{ data.profile.phone}}">
+                          {{{phone}}}
                        </div>
                        <div class="profile-button-form">
-                           <button class="btn btn-primary btn-block profile-button-save" type="reset" onclick="location.href='./profile.html'">Сохранить</button>                       
+                          {{{button}}}                       
                        </div>
            </form>   
        </div>
@@ -61,11 +233,19 @@ export default class ProfileEditorPage extends Block {
    </div>
        </main>`;
 
+    this.children.email = email;
+    this.children.login = login;
+    this.children.first_name = first_name;
+    this.children.second_name = second_name;
+    this.children.nickname = nickname;
+    this.children.phone = phone;
+    this.children.button = button;
+
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);
   }
 }
 
-const notFoundErrorPage = new ProfileEditorPage({});
-const dom = notFoundErrorPage.render();
+const profilePage = new ProfileEditorPage({});
+const dom = profilePage.render();
 document.body.appendChild(dom);

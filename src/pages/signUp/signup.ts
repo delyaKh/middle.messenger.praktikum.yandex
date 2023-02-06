@@ -3,28 +3,48 @@ import Block from "../../classes/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {
+  checkAllForm,
   checkEmail,
   checkFirstName,
   checkLogin,
   checkPassword,
   checkPhone,
   checkSecondName,
+  TFormType,
 } from "../../utils/validator";
 import "./signup.scss";
+
+export interface ISignUpType extends TFormType {
+  email: string;
+  login: string;
+  first_name: string;
+  second_name: string;
+  phone: string;
+  password: string;
+}
 
 export default class RegistrationPage extends Block {
   constructor(props: any) {
     super("div", props);
   }
 
+  private _signupValue: ISignUpType = {
+    email: "",
+    login: "",
+    first_name: "",
+    second_name: "",
+    phone: "",
+    password: "",
+  };
+
   render() {
     const email = new Input({
       id: "email",
       name: "email",
       type: "email",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Почта",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
@@ -33,8 +53,8 @@ export default class RegistrationPage extends Block {
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _email = event?.target.value;
-          checkEmail(_email, this);
+          // const _email = event?.target.value;
+          // checkEmail(_email, this);
         },
       },
     });
@@ -43,9 +63,9 @@ export default class RegistrationPage extends Block {
       id: "login",
       name: "login",
       type: "text",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Логин",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
@@ -54,8 +74,8 @@ export default class RegistrationPage extends Block {
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _login = event?.target.value;
-          checkLogin(_login, this);
+          // const _login = event?.target.value;
+          // checkLogin(_login, this);
         },
       },
     });
@@ -64,9 +84,9 @@ export default class RegistrationPage extends Block {
       id: "first_name",
       name: "first_name",
       type: "text",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Имя",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
@@ -75,8 +95,8 @@ export default class RegistrationPage extends Block {
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _first_name = event?.target.value;
-          checkFirstName(_first_name, this);
+          // const _first_name = event?.target.value;
+          // checkFirstName(_first_name, this);
         },
       },
     });
@@ -85,9 +105,9 @@ export default class RegistrationPage extends Block {
       id: "second_name",
       name: "second_name",
       type: "text",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Фамилия",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
@@ -96,8 +116,8 @@ export default class RegistrationPage extends Block {
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _second_name = event?.target.value;
-          checkSecondName(_second_name, this);
+          // const _second_name = event?.target.value;
+          // checkSecondName(_second_name, this);
         },
       },
     });
@@ -106,9 +126,9 @@ export default class RegistrationPage extends Block {
       id: "phone",
       name: "phone",
       type: "phone",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Телефон",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
@@ -117,8 +137,8 @@ export default class RegistrationPage extends Block {
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _phone = event?.target.value;
-          checkPhone(_phone, this);
+          // const _phone = event?.target.value;
+          // checkPhone(_phone, this);
         },
       },
     });
@@ -127,20 +147,20 @@ export default class RegistrationPage extends Block {
       id: "password",
       name: "password",
       type: "password",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Пароль",
-      required: "required",
       minLength: 6,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _password = event?.target.value;
-          checkPassword(_password, this);
+          checkPassword(_password, this, "password");
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _password = event?.target.value;
-          checkPassword(_password, this);
+          // const _password = event?.target.value;
+          // checkPassword(_password, this);
         },
       },
     });
@@ -149,20 +169,20 @@ export default class RegistrationPage extends Block {
       id: "password_verify",
       name: "password_verify",
       type: "password",
-      className: "form-control auth-input",
+      isValid: true,
+      className: "form-control signup-input",
       placeholder: "Пароль(еще раз)",
-      required: "required",
       minLength: 6,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _password = event?.target.value;
-          checkPassword(_password, this);
+          checkPassword(_password, this, "password_verify");
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
-          const _password = event?.target.value;
-          checkPassword(_password, this);
+          // const _password = event?.target.value;
+          // checkPassword(_password, this);
         },
       },
     });
@@ -170,62 +190,88 @@ export default class RegistrationPage extends Block {
     const button = new Button({
       name: "Зарегистрироваться",
       type: "button",
+      className: "btn btn-primary btn-block button-create",
       events: {
         submit: () => {
-          // @ts-ignore
-          const _login = document.getElementById("login")?.value;
-          // @ts-ignore
-          const _password = document.getElementById("password")?.value;
-          var _checkLogin = checkLogin(_login, this);
-          var _checkPasword = checkPassword(_password, this);
+          this._signupValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            password: document.getElementById("password")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+            // @ts-ignore
+            password_verify: document.getElementById("password_verify")?.value,
+          };
 
-          if (_checkLogin && _checkPasword) {
-            console.log("is valid");
-            window.location.href = "./chat.html";
+          if (checkAllForm(this._signupValue, this)) {
+            console.log(this._signupValue);
+            // window.location.href = "./chat.html";
           }
         },
         click: () => {
-          // @ts-ignore
-          const _login = document.getElementById("login")?.value;
-          // @ts-ignore
-          const _password = document.getElementById("password")?.value;
-          checkLogin(_login, this);
-          checkPassword(_password, this);
+          this._signupValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            password: document.getElementById("password")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+            // @ts-ignore
+            password_verify: document.getElementById("password_verify")?.value,
+          };
+
+          if (checkAllForm(this._signupValue, this)) {
+            console.log(this._signupValue);
+            // window.location.href = "./chat.html";
+          }
         },
       },
     });
 
     const template = `
     <main class="main">
-        <div class="auth">
+        <div class="signup">
           <form class="form">
-            <div class="auth-title">Регистрация</div>
-              <div class="auth-inputs">
+            <div class="signup-title">Регистрация</div>
+              <div class="signup-inputs">
               <div class="profile-input-form">
                 {{{email}}}
               </div>                
-              <div class="profile-input-form">
+              <div class="signup-input-form">
                 {{{login}}}
               </div>
-              <div class="profile-input-form">
+              <div class="signup-input-form">
                 {{{first_name}}}
               </div>                
-              <div class="profile-input-form">
+              <div class="signup-input-form">
               {{{second_name}}}
               </div>
-                <div class="profile-input-form">
+                <div class="signup-input-form">
                 {{{phone}}}
               </div>
-                <div class="profile-input-form">
+                <div class="signup-input-form">
                 {{{password}}}
               </div>
-                <div class="profile-input-form">
+                <div class="signup-input-form">
                 {{{password_verify}}}
               </div>
                 
               </div>
               {{{button}}}
-            <div class="auth-link">
+            <div class="signup-link">
               <a href="./chat.html">Войти</a>
             </div>
           </form>

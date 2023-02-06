@@ -19,25 +19,25 @@ body {
   height: 100%;
 }
 
-.auth {
+.signup {
   width: 350px;
   height: 450px;
   background: var(--white);
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
   border: 0px solid;
 }
 
-.auth .form {
+.signup .form {
   top: 20px;
   max-width: 800px;
-  padding: 50px 0px;
+  padding: 10px 0px;
   border-radius: 10px;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
   background-color: var(--white);
 }
 
-.auth .auth-title {
+.signup .signup-title {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
@@ -46,7 +46,7 @@ body {
   margin-bottom: 10px;
 }
 
-.auth .auth-input {
+.signup .signup-input {
   width: 280px;
   height: 25px;
   text-align: center;
@@ -55,15 +55,11 @@ body {
   border-bottom: 2px solid var(--blue);
 }
 
-.auth .auth-input:invalid:required {
-  border-bottom: 2px solid var(--red);
-}
-
-.auth .auth-input:focus {
+.signup .signup-input:focus {
   outline-width: 0;
 }
 
-.auth .button-create {
+.signup .button-create {
   margin-top: 30%;
   left: -10px;
   width: 280px;
@@ -79,7 +75,7 @@ body {
   color: var(--white);
 }
 
-.auth-link {
+.signup-link {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
@@ -94,12 +90,12 @@ body {
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
-  line-height: 40px;
+  line-height: 30px;
   text-align: center;
   color: var(--black);
 }
 
-.error-input {
+.error-message {
   color: var(--red);
   height: 15px;
   margin: 0px;
@@ -108,4 +104,15 @@ body {
   font-style: normal;
   font-size: 12px;
   line-height: 20px;
+}
+
+.signup .error-input {
+  outline-width: 0;
+  width: 280px;
+  height: 25px;
+  text-align: center;
+  font-weight: 500;
+  border: none;
+  border-radius: 0px;
+  border-bottom: 2px solid var(--red);
 }

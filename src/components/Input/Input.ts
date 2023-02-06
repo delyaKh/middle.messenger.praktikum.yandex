@@ -6,6 +6,7 @@ interface InputProps {
   className: string;
   type: string;
   name?: string;
+  isValid?: boolean;
   placeholder?: string;
   pattern?: string;
   value?: string;
@@ -14,10 +15,9 @@ interface InputProps {
   minLength?: number;
   maxLength?: number;
   events: {
-    focus?: (event?: any) => void;
-    blur?: (event?: any) => void;
-    input?: (event?: any) => void;
-    submit?: (event?: any) => void;
+    focus?: (event?: Event) => void;
+    blur?: (event?: Event) => void;
+    input?: (event?: Event) => void;
   };
 }
 
@@ -31,24 +31,42 @@ export default class Input extends Block {
       return;
     }
 
-    console.log(this.props.error);
+    // console.log(this.props.error);
 
     this.element.querySelectorAll("input").forEach((x) => {
-      const { input, focus, blur, submit } = this.props.events as {
+      const { input, focus, blur } = this.props.events as {
         [key: string]: () => void;
       };
       x.addEventListener("focus", focus);
       x.addEventListener("blur", blur);
       x.addEventListener("input", input);
-      x.addEventListener("submit", submit);
     });
     super._addEvents();
+  }
+
+  _removeEvents(): void {
+    if (!this.props.events) {
+      return;
+    }
+
+    // console.log(this.props.error);
+
+    this.element.querySelectorAll("input").forEach((x) => {
+      const { input, focus, blur } = this.props.events as {
+        [key: string]: () => void;
+      };
+
+      x.removeEventListener("focus", focus);
+      x.removeEventListener("blur", blur);
+      x.removeEventListener("input", input);
+    });
+    super._removeEvents();
   }
 
   render() {
     const template = `
     <div>    
-        <input class="{{className}}" id="{{id}}" name="{{label}}" type="{{type}}" placeholder="{{placeholder}}"
+        <input {{#if isValid}}class="{{className}}"{{else}}class="error-input"{{/if}} id="{{id}}" name="{{label}}" type="{{type}}" placeholder="{{placeholder}}"
             {{#if value}}
             value={{value}}
             {{else}}
@@ -68,12 +86,11 @@ export default class Input extends Block {
             {{/if}}
         />    
         {{#if error}}
-        <p class="error-input">
+        <p class="error-message">
         {{error}}
         </p>
         {{/if}}
         </div>`;
-
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);
   }

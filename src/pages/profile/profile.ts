@@ -1,19 +1,37 @@
 import Handlebars from "handlebars";
 import Block from "../../classes/Block";
+import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {
+  checkAllForm,
   checkEmail,
   checkFirstName,
   checkLogin,
   checkPhone,
   checkSecondName,
+  TFormType,
 } from "../../utils/validator";
 import "./profile.scss";
 
+export interface IProfileType extends TFormType {
+  email: string;
+  login: string;
+  first_name: string;
+  second_name: string;
+  phone: string;
+}
 export default class ProfilePage extends Block {
   constructor(props: any) {
     super("div", props);
   }
+
+  private _profileValue: IProfileType = {
+    login: "",
+    email: "",
+    first_name: "",
+    second_name: "",
+    phone: "",
+  };
 
   render() {
     const profile = {
@@ -34,8 +52,8 @@ export default class ProfilePage extends Block {
       name: "email",
       type: "email",
       className: "profile-input",
-      value: profile.email,
-      required: "required",
+      isValid: true,
+      placeholder: profile.email,
       events: {
         blur: () => {
           // @ts-ignore
@@ -55,64 +73,49 @@ export default class ProfilePage extends Block {
       name: "login",
       type: "text",
       className: "profile-input",
-      placeholder: "Логин",
-      value: profile.login,
-      required: "required",
+      isValid: true,
+      placeholder: profile.login,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _login = event?.target.value;
           checkLogin(_login, this);
         },
-        focus: (event: InputEvent) => {
-          // @ts-ignore
-          const _login = event?.target.value;
-          checkLogin(_login, this);
-        },
+        focus: (event: InputEvent) => {},
       },
     });
 
     const first_name = new Input({
       id: "first_name",
       name: "first_name",
+      isValid: true,
       type: "text",
-      value: profile.first_name,
+      placeholder: profile.first_name,
       className: "profile-input",
-      placeholder: "Имя",
-      required: "required",
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _first_name = event?.target.value;
           checkFirstName(_first_name, this);
         },
-        focus: (event: InputEvent) => {
-          // @ts-ignore
-          const _first_name = event?.target.value;
-          checkFirstName(_first_name, this);
-        },
+        focus: (event: InputEvent) => {},
       },
     });
 
     const second_name = new Input({
       id: "second_name",
       name: "second_name",
+      isValid: true,
       type: "text",
       className: "profile-input",
-      value: profile.second_name,
-      placeholder: "Фамилия",
-      required: "required",
+      placeholder: profile.second_name,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _second_name = event?.target.value;
           checkSecondName(_second_name, this);
         },
-        focus: (event: InputEvent) => {
-          // @ts-ignore
-          const _second_name = event?.target.value;
-          checkSecondName(_second_name, this);
-        },
+        focus: (event: InputEvent) => {},
       },
     });
 
@@ -120,20 +123,16 @@ export default class ProfilePage extends Block {
       id: "phone",
       name: "phone",
       type: "phone",
+      isValid: true,
       className: "profile-input",
-      value: profile.phone,
-      required: "required",
+      placeholder: profile.phone,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _phone = event?.target.value;
           checkPhone(_phone, this);
         },
-        focus: (event: InputEvent) => {
-          // @ts-ignore
-          const _phone = event?.target.value;
-          checkPhone(_phone, this);
-        },
+        focus: (event: InputEvent) => {},
       },
     });
 
@@ -141,20 +140,57 @@ export default class ProfilePage extends Block {
       id: "nickname",
       name: "nickname",
       type: "text",
-      value: profile.nickname,
+      placeholder: profile.nickname,
+      isValid: true,
       className: "profile-input",
-      placeholder: "Имя в чате",
-      required: "required",
       events: {
-        blur: (event: InputEvent) => {
-          // @ts-ignore
-          const _first_name = event?.target.value;
-          checkFirstName(_first_name, this);
+        blur: (event: InputEvent) => {},
+        focus: (event: InputEvent) => {},
+      },
+    });
+
+    const button = new Button({
+      className: "btn btn-primary btn-block profile-button",
+      name: "Выйти",
+      type: "reset",
+      events: {
+        submit: () => {
+          this._profileValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+          };
+
+          if (checkAllForm(this._profileValue, this)) {
+            console.log(this._profileValue);
+            // window.location.href = "./chat.html";
+          }
         },
-        focus: (event: InputEvent) => {
-          // @ts-ignore
-          const _first_name = event?.target.value;
-          checkFirstName(_first_name, this);
+        click: () => {
+          this._profileValue = {
+            // @ts-ignore
+            login: document.getElementById("login")?.value,
+            // @ts-ignore
+            email: document.getElementById("email")?.value,
+            // @ts-ignore
+            first_name: document.getElementById("first_name")?.value,
+            // @ts-ignore
+            second_name: document.getElementById("second_name")?.value,
+            // @ts-ignore
+            phone: document.getElementById("phone")?.value,
+          };
+
+          if (checkAllForm(this._profileValue, this)) {
+            console.log(this._profileValue);
+            // window.location.href = "./chat.html";
+          }
         },
       },
     });
@@ -163,7 +199,7 @@ export default class ProfilePage extends Block {
     <div class="profile-wrap">
             <form class="form">
                         <div class="profile-image">
-                            <img class="profile-item-img" src="{{{img}}}" name="avatar" alt="avatar"/>    
+                            <img class="profile-item-img" src="image/avatar.png" name="avatar" alt="avatar"/>    
                         </div>
                         <div class="profile-name">petr_belov</div>    
                         <div class="profile-input-form">
@@ -201,8 +237,7 @@ export default class ProfilePage extends Block {
                         <div class="profile-link">
                             <a href="./profilePasswordEditor.html">Изменить пароль</a>
                         </div>
-                        {{{button}}}
-                        <button class="btn btn-primary btn-block profile-button" type="reset" onclick="location.href='./chat.html'">Выйти</button>                       
+                        {{{button}}}                      
                         
             </form>   
         </div>    
@@ -213,8 +248,9 @@ export default class ProfilePage extends Block {
     this.children.login = login;
     this.children.first_name = first_name;
     this.children.second_name = second_name;
-    this.children.phone = phone;
     this.children.nickname = nickname;
+    this.children.phone = phone;
+    this.children.button = button;
 
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);

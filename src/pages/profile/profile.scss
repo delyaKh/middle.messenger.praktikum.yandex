@@ -131,7 +131,7 @@ body {
   height: 140px;
 }
 
-.error-input {
+.error-message {
   color: var(--red);
   height: 15px;
   margin: 0px;
@@ -140,4 +140,21 @@ body {
   font-style: normal;
   font-size: 12px;
   line-height: 20px;
+}
+
+.error-input {
+  display: block;
+  width: 280px;
+  height: 25px;
+  text-align: center;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid var(--red);
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  text-align: right;
+  outline-width: 0;
 }

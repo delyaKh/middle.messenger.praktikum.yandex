@@ -10,14 +10,19 @@ export default class AuthPage extends Block {
     super("div", props);
   }
 
+  private _authValue: {
+    login: string;
+    password: string;
+  };
+
   render() {
     const login = new Input({
       id: "login",
       name: "login",
       type: "text",
-      className: "form-control auth-input",
+      className: "auth-input",
+      isValid: true,
       placeholder: "Логин",
-      required: "required",
       pattern: "^[a-zA-Z0-9_.-]*$",
       events: {
         blur: (event: InputEvent) => {
@@ -37,15 +42,15 @@ export default class AuthPage extends Block {
       id: "password",
       name: "password",
       type: "password",
+      isValid: true,
       className: "form-control auth-input",
       placeholder: "Пароль",
-      required: "required",
       minLength: 6,
       events: {
         blur: (event: InputEvent) => {
           // @ts-ignore
           const _password = event?.target.value;
-          checkPassword(_password, this);
+          checkPassword(_password, this, "password");
         },
         focus: (event: InputEvent) => {
           // @ts-ignore
@@ -58,6 +63,7 @@ export default class AuthPage extends Block {
     const button = new Button({
       name: "Авторизоваться",
       type: "button",
+      className: "btn btn-primary btn-block button-create",
       events: {
         submit: () => {
           // @ts-ignore
@@ -65,11 +71,12 @@ export default class AuthPage extends Block {
           // @ts-ignore
           const _password = document.getElementById("password")?.value;
           var _checkLogin = checkLogin(_login, this);
-          var _checkPasword = checkPassword(_password, this);
+          var _checkPasword = checkPassword(_password, this, "password");
 
           if (_checkLogin && _checkPasword) {
-            console.log("is valid");
-            window.location.href = "./serverError.html";
+            this._authValue = { login: _login, password: _password };
+            console.log(this._authValue);
+            // window.location.href = "./chat.html";
           }
         },
         click: (event: InputEvent) => {
@@ -78,11 +85,12 @@ export default class AuthPage extends Block {
           // @ts-ignore
           const _password = document.getElementById("password")?.value;
           var _checkLogin = checkLogin(_login, this);
-          var _checkPasword = checkPassword(_password, this);
+          var _checkPasword = checkPassword(_password, this, "password");
 
           if (_checkLogin && _checkPasword) {
-            console.log("is valid");
-            window.location.href = "./serverError.html";
+            this._authValue = { login: _login, password: _password };
+            console.log(this._authValue);
+            // window.location.href = "./chat.html";
           }
         },
       },

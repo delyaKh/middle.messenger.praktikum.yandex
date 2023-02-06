@@ -19,7 +19,7 @@ export default class Block {
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render",
-  };
+  } as const;
 
   constructor(tagName: string, props: TProps) {
     const eventBus = new EventBus();

@@ -13,7 +13,7 @@ export default class Home extends Block {
     const template = `
     <main>
       <nav class="nav-container">
-             <ui class="form">
+             <ul class="form">
                 <li class="item">
                 <a href="/auth.html">Авторизация</a>
                 </li>
@@ -32,7 +32,7 @@ export default class Home extends Block {
                 <li class="item">
                 <a href="/profile.html">Профиль</a>
                 </li>
-             </ui>
+             </ul>
       </nav>
     </main>`;
     const res = Handlebars.compile(template);

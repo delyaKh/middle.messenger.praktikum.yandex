@@ -106,7 +106,7 @@ export default class ChatPage extends Block {
 
                   <div class="chat-container-dialog">
                       <div class="dialog-last-date">{{data.dialog_room.last_date}}</div>
-                      <ui class="dialog-list">
+                      <ul class="dialog-list">
                           {{#each data.dialog_room.dialog}}
                               <li class="message-li">
                                   <div class="message">
@@ -117,7 +117,7 @@ export default class ChatPage extends Block {
                                   </div>                                
                               </li>
                           {{/each}}
-                      </ui>
+                      </ul>
                   </div>
 
                   <div class="chat-container-footer">

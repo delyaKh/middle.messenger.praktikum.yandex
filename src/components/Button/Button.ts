@@ -4,7 +4,7 @@ import Block from "../../classes/Block";
 export interface ButtonProps {
   name: string;
   type?: string;
-  className?: string;
+  className: string;
   primary?: boolean;
   secondary?: boolean;
   href?: string;
@@ -38,7 +38,7 @@ export default class Button extends Block {
 
   render() {
     const template = `<div class="form-group">
-    <button class="btn btn-primary btn-block button-create" 
+    <button class="{{className}}"
     type="{{type}}">{{name}}</button>
     </div>`;
 

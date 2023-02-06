@@ -13,6 +13,7 @@ type TRequestOptions = {
   timeout?: number;
   data?: TRequestData;
 };
+type HTTPMethod = (url: string, options?: TRequestOptions) => Promise<unknown>;
 
 function queryStringify(data: TRequestData) {
   if (!data) return "";
@@ -22,23 +23,23 @@ function queryStringify(data: TRequestData) {
 }
 
 export default class HTTPTransport {
-  get = (url: string, options = {}) => {
+  get: HTTPMethod = (url: string, options = {}) => {
     return this.request(url, { ...options, method: METHODS.GET });
   };
 
-  post = (url: string, options = {}) => {
+  post: HTTPMethod = (url: string, options = {}) => {
     return this.request(url, { ...options, method: METHODS.POST });
   };
 
-  put = (url: string, options = {}) => {
+  put: HTTPMethod = (url: string, options = {}) => {
     return this.request(url, { ...options, method: METHODS.PUT });
   };
 
-  patch = (url: string, options = {}) => {
+  patch: HTTPMethod = (url: string, options = {}) => {
     return this.request(url, { ...options, method: METHODS.PATCH });
   };
 
-  delete = (url: string, options = {}) => {
+  delete: HTTPMethod = (url: string, options = {}) => {
     return this.request(url, { ...options, method: METHODS.DELETE });
   };
 
