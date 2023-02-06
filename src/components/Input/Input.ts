@@ -14,7 +14,7 @@ interface InputProps {
   required?: string;
   minLength?: number;
   maxLength?: number;
-  events: {
+  events?: {
     focus?: (event?: Event) => void;
     blur?: (event?: Event) => void;
     input?: (event?: Event) => void;
