@@ -216,7 +216,7 @@ export default class ChatPage extends Block {
                   <div class="chat-container-dialog">
                       <div class="dialog-last-date">{{dialog_room.last_date}}</div>
                       <ul class="dialog-list">
-                          {{#each dialog_room.dialog}}
+                          {{#each dialog_room.dialogs}}
                               <li class="message-li">
                                   <div class="message">
                                       <div class="message-{{type}}">
