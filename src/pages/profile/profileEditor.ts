@@ -10,7 +10,7 @@ import {
   checkPhone,
   checkSecondName,
 } from "../../utils/validator";
-import { IProfileType } from "./profile";
+import { IProfileType } from "./ProfilePage";
 import "./profile.scss";
 
 export default class ProfileEditorPage extends Block {

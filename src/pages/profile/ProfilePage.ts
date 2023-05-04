@@ -3,7 +3,6 @@ import Block from "../../classes/Block";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import {
-  checkAllForm,
   checkEmail,
   checkFirstName,
   checkLogin,
@@ -12,28 +11,60 @@ import {
   TFormType,
 } from "../../utils/validator";
 import "./profile.scss";
+import { authController } from "../../controllers/AuthController";
+import { Store, withStore } from "../../common/Store";
+import { Router } from "../../common/Router";
 
-export interface IProfileType extends TFormType {
-  email: string;
+export type AppState = {
+  isLoading: boolean;
+  errorMessage: string | null;
+  user: UserType | null;
+  isAppStarted: boolean;
+  isPopupShown: boolean;
+};
+
+export interface UserType {
+  id: number;
+  displayName: string;
   login: string;
-  first_name: string;
-  second_name: string;
+  firstName: string;
+  secondName: string;
+  avatar: string;
   phone: string;
+  email: string;
 }
-export default class ProfilePage extends Block {
-  constructor(props: any) {
-    super("div", props);
+export interface ProfileProps {
+  user: UserType | null;
+  store: Store<AppState>;
+  router: Router;
+  navigateBack: () => void;
+}
+
+// export interface IProfileType extends TFormType {
+//   email: string;
+//   login: string;
+//   first_name: string;
+//   second_name: string;
+//   phone: string;
+// }
+
+class ProfilePageBase extends Block {
+  // private _profileValue: IProfileType = {
+  //   login: "",
+  //   email: "",
+  //   first_name: "",
+  //   second_name: "",
+  //   phone: "",
+  // };
+
+  constructor(props: ProfileProps) {
+    super("", props);
+    this.setProps({ navigateBack: () => this.props.router.go("/main") });
   }
 
-  private _profileValue: IProfileType = {
-    login: "",
-    email: "",
-    first_name: "",
-    second_name: "",
-    phone: "",
-  };
+  init() {
+    authController.fetchUser();
 
-  render() {
     const profile = {
       _id: "1",
       index: 0,
@@ -46,7 +77,6 @@ export default class ProfilePage extends Block {
       phone: "+7(909)9673030",
       password: "12345678",
     };
-
     const email = new Input({
       id: "email",
       name: "email",
@@ -67,7 +97,6 @@ export default class ProfilePage extends Block {
         },
       },
     });
-
     const login = new Input({
       id: "login",
       name: "login",
@@ -84,7 +113,6 @@ export default class ProfilePage extends Block {
         focus: (event: InputEvent) => {},
       },
     });
-
     const first_name = new Input({
       id: "first_name",
       name: "first_name",
@@ -101,7 +129,6 @@ export default class ProfilePage extends Block {
         focus: (event: InputEvent) => {},
       },
     });
-
     const second_name = new Input({
       id: "second_name",
       name: "second_name",
@@ -118,7 +145,6 @@ export default class ProfilePage extends Block {
         focus: (event: InputEvent) => {},
       },
     });
-
     const phone = new Input({
       id: "phone",
       name: "phone",
@@ -135,7 +161,6 @@ export default class ProfilePage extends Block {
         focus: (event: InputEvent) => {},
       },
     });
-
     const nickname = new Input({
       id: "nickname",
       name: "nickname",
@@ -148,53 +173,62 @@ export default class ProfilePage extends Block {
         focus: (event: InputEvent) => {},
       },
     });
-
     const button = new Button({
       className: "btn btn-primary btn-block profile-button",
       name: "Выйти",
       type: "reset",
       events: {
         submit: () => {
-          this._profileValue = {
-            // @ts-ignore
-            login: document.getElementById("login")?.value,
-            // @ts-ignore
-            email: document.getElementById("email")?.value,
-            // @ts-ignore
-            first_name: document.getElementById("first_name")?.value,
-            // @ts-ignore
-            second_name: document.getElementById("second_name")?.value,
-            // @ts-ignore
-            phone: document.getElementById("phone")?.value,
-          };
-
-          if (checkAllForm(this._profileValue, this)) {
-            console.log(this._profileValue);
-            // window.location.href = "./chat.html";
-          }
+          // this._profileValue = {
+          //   // @ts-ignore
+          //   login: document.getElementById("login")?.value,
+          //   // @ts-ignore
+          //   email: document.getElementById("email")?.value,
+          //   // @ts-ignore
+          //   first_name: document.getElementById("first_name")?.value,
+          //   // @ts-ignore
+          //   second_name: document.getElementById("second_name")?.value,
+          //   // @ts-ignore
+          //   phone: document.getElementById("phone")?.value,
+          // };
+          // if (checkAllForm(this._profileValue, this)) {
+          //   console.log(this._profileValue);
+          //   // window.location.href = "./chat.html";
+          // }
         },
         click: () => {
-          this._profileValue = {
-            // @ts-ignore
-            login: document.getElementById("login")?.value,
-            // @ts-ignore
-            email: document.getElementById("email")?.value,
-            // @ts-ignore
-            first_name: document.getElementById("first_name")?.value,
-            // @ts-ignore
-            second_name: document.getElementById("second_name")?.value,
-            // @ts-ignore
-            phone: document.getElementById("phone")?.value,
-          };
+          authController.logout();
+          // this._profileValue = {
+          //   // @ts-ignore
+          //   login: document.getElementById("login")?.value,
+          //   // @ts-ignore
+          //   email: document.getElementById("email")?.value,
+          //   // @ts-ignore
+          //   first_name: document.getElementById("first_name")?.value,
+          //   // @ts-ignore
+          //   second_name: document.getElementById("second_name")?.value,
+          //   // @ts-ignore
+          //   phone: document.getElementById("phone")?.value,
+          // };
 
-          if (checkAllForm(this._profileValue, this)) {
-            console.log(this._profileValue);
-            // window.location.href = "./chat.html";
-          }
+          // if (checkAllForm(this._profileValue, this)) {
+          //   console.log(this._profileValue);
+          //   // window.location.href = "./chat.html";
+          // }
         },
       },
     });
 
+    this.children.email = email;
+    this.children.login = login;
+    this.children.first_name = first_name;
+    this.children.second_name = second_name;
+    this.children.nickname = nickname;
+    this.children.phone = phone;
+    this.children.button = button;
+  }
+
+  render() {
     const template = `<main class="main">
     <div class="profile-wrap">
             <form class="form">
@@ -244,19 +278,15 @@ export default class ProfilePage extends Block {
     </div>
         </main>`;
 
-    this.children.email = email;
-    this.children.login = login;
-    this.children.first_name = first_name;
-    this.children.second_name = second_name;
-    this.children.nickname = nickname;
-    this.children.phone = phone;
-    this.children.button = button;
-
     const res = Handlebars.compile(template);
     return this.compile(res, this.props);
   }
 }
 
-const profilePage = new ProfilePage({});
-const dom = profilePage.render();
-document.body.appendChild(dom);
+const withUser = withStore((state) => ({ ...state.currentUser }));
+
+const ProfilePage = withUser(ProfilePageBase);
+
+export const profilePage = new ProfilePage({});
+// const dom = profilePage.render();
+// document.body.appendChild(dom);

@@ -1,4 +1,6 @@
-enum METHODS {
+import { queryStringify } from "../helpers/helpers";
+
+enum Method {
   GET = "GET",
   POST = "POST",
   PUT = "PUT",
@@ -6,79 +8,97 @@ enum METHODS {
   DELETE = "DELETE",
 }
 
-type TRequestData = Record<string, string | number>;
+type TRequestData = Record<string, string | number | number[]>;
 type TRequestOptions = {
-  method?: METHODS;
-  headers?: Record<string, string>;
-  timeout?: number;
-  data?: TRequestData;
+  method: Method;
+  sendingjson?: boolean;
+  data?: any;
 };
 type HTTPMethod = (url: string, options?: TRequestOptions) => Promise<unknown>;
 
-function queryStringify(data: TRequestData) {
-  if (!data) return "";
-  return Object.entries(data).reduce((acc, [key, value], index, arr) => {
-    return `${acc}${key}=${value}${index < arr.length - 1 ? "&" : ""}`;
-  }, "?");
-}
+// function queryStringify(data: TRequestData) {
+//   if (!data) return "";
+//   return Object.entries(data).reduce((acc, [key, value], index, arr) => {
+//     return `${acc}${key}=${value}${index < arr.length - 1 ? "&" : ""}`;
+//   }, "?");
+// }
 
 export default class HTTPTransport {
-  get: HTTPMethod = (url: string, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET });
-  };
+  static API_URL = "https://ya-praktikum/api/v2";
+  protected endpoint: string;
 
-  post: HTTPMethod = (url: string, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST });
-  };
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+  }
 
-  put: HTTPMethod = (url: string, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT });
-  };
+  get<Response>(path = "/"): Promise<Response> {
+    return this.request<Response>(this.endpoint + path);
+  }
 
-  patch: HTTPMethod = (url: string, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.PATCH });
-  };
-
-  delete: HTTPMethod = (url: string, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE });
-  };
-
-  request = (url: string, options: TRequestOptions) => {
-    const {
-      method = METHODS.GET,
-      headers = {},
+  post<Response = void>(path: string, data?: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.POST,
       data,
-      timeout = 5000,
-    } = options;
+    });
+  }
 
-    const query =
-      method === METHODS.GET ? queryStringify(data as TRequestData) : "";
+  put<Response = void>(
+    path: string,
+    data: unknown,
+    sendingjson?: boolean
+  ): Promise<Response> {
+    return this.request<Response>(
+      this.endpoint + path,
+      {
+        method: Method.PUT,
+        data,
+      },
+      sendingjson
+    );
+  }
+
+  patch<Response = void>(path: string, data: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.PATCH,
+      data,
+    });
+  }
+
+  delete<Response>(path: string, data?: unknown): Promise<Response> {
+    return this.request<Response>(this.endpoint + path, {
+      method: Method.DELETE,
+      data,
+    });
+  }
+
+  private request<Response>(
+    url: string,
+    options: TRequestOptions = { method: Method.GET },
+    sendingjson?: boolean
+  ): Promise<Response> {
+    const { method, data } = options;
+
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url + query);
-
-      Object.entries(headers).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
+      xhr.open(method, url);
 
       xhr.onload = () => {
         if (xhr.status >= 300) {
-          reject(xhr);
+          reject(xhr.response);
         } else {
-          resolve(xhr);
+          resolve(xhr.response);
         }
       };
       xhr.onabort = reject;
       xhr.onerror = reject;
-      xhr.timeout = timeout;
       xhr.ontimeout = reject;
 
-      if (method === METHODS.GET || !data) {
+      if (method === Method.GET || !data) {
         xhr.send();
       } else {
         xhr.send(JSON.stringify(data));
       }
     });
-  };
+  }
 }
