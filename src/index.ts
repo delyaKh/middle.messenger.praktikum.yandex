@@ -1,6 +1,4 @@
-import { ErrorPage } from "./pages/Error/Error";
 import { SignInPage } from "./pages/signIn/signIn";
-import { SignUpPage } from "./pages/signUp/signUp";
 import { ProfilePage } from "./pages/Profile/Profile";
 import { SettingsPage } from "./pages/Settings/Settings";
 import { ProfileEditPassPage } from "./pages/ProfileEditPass/ProfileEditPass";
@@ -27,6 +25,8 @@ import { registerComponent } from "./utils/RegisterComponent";
 import { registerHelpers } from "./utils/RegisterHelpers";
 
 import "../public/static/globals.scss";
+import { ErrorPage } from "./pages/error/Error";
+import { SignUpPage } from "./pages/signUp/signup";
 
 registerComponent("Button", Button as any);
 registerComponent("Input", Input as any);
