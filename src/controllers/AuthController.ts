@@ -1,61 +1,59 @@
-import { AuthApi, SigninData, SignupData } from "../api/AuthApi";
-import { router } from "../common/Router";
-import { store } from "../common/Store";
+import API, { AuthAPI } from "../api/AuthAPI";
+import store from "../utils/Store";
+import router from "../utils/Router";
+import { ISigninData, ISignupData } from "../api/interfaces";
+import { NotificationTypes, showNotification } from "../utils/ShowNotification";
 
-class AuthController {
-  private _api: AuthApi;
+export class AuthController {
+  private readonly api: AuthAPI;
 
   constructor() {
-    this._api = new AuthApi();
+    this.api = API;
   }
 
-  signup(data: SignupData) {
-    this._api
-      .signup(data)
-      .then(() => {
-        router.go("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async signin(data: ISigninData) {
+    try {
+      await this.api.signin(data);
+
+      router.go("/profile");
+    } catch (e) {
+      showNotification(e.reason, NotificationTypes.Warning);
+    }
   }
 
-  signin(data: SigninData) {
-    this._api
-      .signin(data)
-      .then(() => {
-        router.go("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async signup(data: ISignupData) {
+    try {
+      await this.api.signup(data);
+
+      await this.fetchUser();
+
+      router.go("/profile");
+    } catch (e) {
+      showNotification(e.reason, NotificationTypes.Warning);
+    }
   }
 
-  logout() {
-    this._api
-      .logout()
-      .then(() => {
-        router.go("/signup");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  async fetchUser() {
+    try {
+      const user = await this.api.read();
+
+      store.set("user", user);
+
+      return user;
+    } catch (e) {
+      showNotification(e.reason, NotificationTypes.Warning);
+    }
   }
 
-  fetchUser() {
-    store.set("user.isLoading", true);
-    return this._api
-      .getUser()
-      .then((user) => {
-        store.set("user.data", user);
-      })
-      .catch(() => {
-        store.set("user.hasError", true);
-      })
-      .finally(() => {
-        store.set("user.isLoading", false);
-      });
+  async logout() {
+    try {
+      await this.api.logout();
+
+      router.go("/login");
+    } catch (e) {
+      showNotification(e.reason, NotificationTypes.Warning);
+    }
   }
 }
 
-export const authController = new AuthController();
+export default new AuthController();
