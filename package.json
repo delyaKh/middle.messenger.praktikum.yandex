@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "parcel public/index.html --open --port 3000",
-    "build": "parcel build public/index.html",
+    "build": "parcel build public/*.html --no-cache",
     "stylelint": "npm stylelint '**/*.css'"
   },
   "engine": {
