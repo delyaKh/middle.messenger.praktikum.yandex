@@ -2,7 +2,7 @@ import { Block } from "../../utils/Block";
 import template from "./profile.hbs";
 import { withStore } from "../../utils/Store";
 import AuthController from "../../controllers/AuthController";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 
 class ProfilePageBase extends Block {
   init() {

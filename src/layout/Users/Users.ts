@@ -1,6 +1,6 @@
 import { Block } from "../../utils/Block";
 import template from "./users.hbs";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 import { withStore } from "../../utils/Store";
 import UserController from "../../controllers/UserController";
 import ChatController from "../../controllers/ChatController";

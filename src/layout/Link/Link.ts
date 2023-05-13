@@ -1,5 +1,5 @@
 import template from "./link.hbs";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 import { PropsWithRouter, withRouter } from "../../hocs/withRouter";
 import { Block } from "../../utils/Block";
 

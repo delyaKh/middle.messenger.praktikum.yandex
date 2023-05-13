@@ -1,5 +1,5 @@
 import template from "./notice.hbs";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 import { Block } from "../../utils/Block";
 
 interface INoticeProps {

@@ -1,6 +1,6 @@
 import template from "./dialog.hbs";
 import { Block } from "../../utils/Block";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 import MessageController from "../../controllers/MessageController";
 
 export class Dialog extends Block {

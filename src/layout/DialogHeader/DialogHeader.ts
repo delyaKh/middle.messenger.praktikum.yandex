@@ -1,6 +1,6 @@
 import template from "./dialogHeader.hbs";
 import { Block } from "../../utils/Block";
-import styles from "./styles.module.scss";
+import * as styles from "./styles.module.scss";
 import ChatController from "../../controllers/ChatController";
 
 export class DialogHeader extends Block {
